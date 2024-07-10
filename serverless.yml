@@ -1,0 +1,32 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: overtakesolutions
+# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
+app: api-chia-serverless-aws
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: api-chia-serverless-aws
+
+provider:
+  name: aws
+  runtime: python3.10
+
+functions:
+  hello:
+    handler: src/handlers/handler.holders
+    events:
+      - httpApi:
+          path: /
+          method: get
+
+plugins:
+  - serverless-offline
+  - serverless-python-requirements
+  
+custom:
+  serverless-offline:
+    httpPort: 3001
+
+package:
+  exclude:
+    - '**/*'
+  include:
+    - src/**
